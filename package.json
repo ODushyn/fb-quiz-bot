@@ -1,0 +1,35 @@
+{
+  "name": "fb-quiz-bot",
+  "version": "1.0.0",
+  "description": "FB quiz bot.",
+  "license": "ISC",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ODushyn/fb-quiz-bot.git"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "author": "wo.dushyn@gmail.com",
+  "bugs": {
+    "url": "https://github.com/ODushyn/fb-quiz-bot/issues"
+  },
+  "homepage": "https://github.com/ODushyn/fb-quiz-bot#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "request": "^2.72.0",
+    "body-parser": "*"
+  },
+  "keywords": [
+    "messenger",
+    "bot",
+    "facebook",
+    "quiz",
+    "game"
+  ]
+}
