@@ -14,3 +14,7 @@ First priority tasks list:
 - [ ] Fill questions for quiz
 - [ ] Make release!
 
+Issues:
+- [x] Messenger does not always get messages in the order they were sent. 
+        (https://stackoverflow.com/questions/37152355/facebook-messenger-bot-not-sending-messages-in-order) 
+
