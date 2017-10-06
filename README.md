@@ -16,6 +16,19 @@ First priority tasks list:
 - [ ] Make release!
 
 Issues:
-- [x] Messenger does not always get messages in the order they were sent. 
-        (https://stackoverflow.com/questions/37152355/facebook-messenger-bot-not-sending-messages-in-order) 
+- [ ] _tipCharsNumber improve function. It shows the answer on the second round if answer is one character long
+- [ ] Messenger does not always get messages in the order they were sent. 
+        (https://stackoverflow.com/questions/37152355/facebook-messenger-bot-not-sending-messages-in-order)
+         
+// + tips should be constant after each response
+// + produce 2 tips which depend on chars number for each question
+// + stop after 2 tips, show answer and ask to type anything to continue.
+// + add basic commands set: start(type anything), stop(!), skip(-).
+// + show asnwer if player does not provide correct one. add time between last tip and correct answer
+// - move reset function from states to State prototype
+// - show message "Almost correct!" when one letter is incorrect in the answer
+// - add instruction description to the fb page
+// - and possibillity to specify tip interval to the user
+// - https://opentdb.com/api_config.php
+// - http://viquiz.ru/wiki/skachat-voprosy-viktoriny
 

@@ -6,6 +6,8 @@ function LookingForStartOptionState(player) {
         if (message === 'старт') {
             player.changeState(new PreparingQuizQuestionState(player));
         }
+    };
+    this.reset = function () {
     }
 }
 
