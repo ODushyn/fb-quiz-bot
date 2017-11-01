@@ -1,31 +1,35 @@
-module.exports = function (id) {
-    let botState = new LookingForStartOptionState(this);
+const fbAPI = require('../common/fbAPI.js');
 
+module.exports = Player;
+
+function Player(id) {
     this.id = id;
-    this.processMessage = function (message) {
-        console.log('Current state: ' + botState.name);
-        let isGlobalMsg = instructions.processGlobalCommands(this, message);
-        if(isGlobalMsg){
-            return;
-        }
-        // if system in transition state we should not precess messages
-        if (!botState.transit) {
-            botState.transition(message);
+    this.language = '';
+    this.settings = {
+        MULTIPLE_CHOICE: {
+            introduced: false
+        },
+        TIPS: {
+            introduced: true
         }
     };
-    this.changeState = function (newState, message) {
-        console.log('New state: ' + newState.name);
-        botState = newState;
-        // if system's current state is transit
-        // then it's just a processing task so call it transition implicitly and immediatly
-        if (botState.transit) {
-            botState.transition(message);
-        }
+    this.question = '';
+    this.answer = '';
+
+    this.update = function(ques, ans) {
+        this.question = ques;
+        this.answer = ans;
     };
-    this.reset = function () {
-        botState.reset();
+
+    this.isCorrect = function(userAnswer){
+        return this.answer.toLowerCase() === userAnswer.toLowerCase();
+    };
+
+    this.introductionDone = function(name){
+        return this.settings[name].introduced;
+    };
+
+    this.sendTextMessage = function(text) {
+        fbAPI.sendTextMessage(this.id, text);
     }
 };
-
-const LookingForStartOptionState = require('./states/LookingForStartOptionState.js');
-const instructions = require('../common/instructions.js');

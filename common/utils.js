@@ -1,9 +1,9 @@
+const ANSWER_SPECIAL_SYMBOLS = require('../constants/const.js').ANSWER_SPECIAL_SYMBOLS;
+
 exports.maskAnswer = function(answer) {
-    let specialSymbols = ['-', ' '];
     let maskedAnswer = Array.from(answer);
-    console.log(maskedAnswer);
     maskedAnswer.forEach((char, index) => {
-        if(specialSymbols.indexOf(char) !== -1){
+        if(ANSWER_SPECIAL_SYMBOLS.includes(char)) {
             maskedAnswer[index] = char;
             return;
         }
@@ -12,6 +12,10 @@ exports.maskAnswer = function(answer) {
     return maskedAnswer.join('');
 };
 
-exports.removeSpecialSymbols = function(answer) {
-    return answer.replace(/-|\s/g, '');
+exports.removeAnswerSpecialSymbols = function(answer) {
+    let cleanAnswer = answer;
+    ANSWER_SPECIAL_SYMBOLS.forEach((symbol) => {
+        cleanAnswer = cleanAnswer.replace(symbol, '');
+    });
+    return cleanAnswer;
 }
