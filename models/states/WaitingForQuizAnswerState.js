@@ -1,23 +1,16 @@
-const context = require('../../common/context.js');
-const quize = require('../../constants/quize.js');
 const fbAPI = require('../../common/fbAPI.js');
+const quize = require('../../constants/quize.js');
+const instructionsInterceptor = require('../../handlers/InstructionsInterceptor.js');
 
 module.exports = WaitingForQuizAnswerState;
 
-function WaitingForQuizAnswerState(player) {
+function WaitingForQuizAnswerState(handler) {
     this.name = 'WAITING_FOR_QUIZ_ANSWER';
-    this.transition = function (message) {
+    this.transition = function (stateContext, message) {
         console.log('Get answer: ' + message);
-        if (isAnswerCorrect(player.id, message)) {
-            fbAPI.sendTextMessage(player.id, "Верно!");
-            player.changeState(new PreparingQuizQuestionState(player))
-        }
+        handler.processAnswer(stateContext, message);
+    };
+    this.intercept = function(stateContext, message) {
+        return instructionsInterceptor.intercept(message, stateContext, handler);
     }
 }
-
-function isAnswerCorrect(playerId, playerAnswer) {
-    let answers = quize[context[playerId].questionId].answers;
-    return answers.indexOf(playerAnswer) > -1;
-}
-
-const PreparingQuizQuestionState = require('../states/PreparingQuizQuestionState.js');

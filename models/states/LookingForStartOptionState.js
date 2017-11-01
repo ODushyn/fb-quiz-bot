@@ -1,12 +1,13 @@
 module.exports = LookingForStartOptionState;
 
-function LookingForStartOptionState(player) {
+function LookingForStartOptionState(handler) {
     this.name = 'WAITING_FOR_START_OPTION';
-    this.transition = function (message) {
-        if (message === 'старт') {
-            player.changeState(new PreparingQuizQuestionState(player));
-        }
+    this.transition = function (stateContext, message) {
+        handler.startRound(stateContext);
+    };
+    this.intercept = function(stateContext, message) {
+        return instructionsInterceptor.intercept(message, stateContext, handler);
     }
 }
 
-const PreparingQuizQuestionState = require('../states/PreparingQuizQuestionState.js');
+const instructionsInterceptor = require('../../handlers/InstructionsInterceptor.js');

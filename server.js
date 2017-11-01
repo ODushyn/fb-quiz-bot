@@ -1,11 +1,10 @@
 // server and libs
 const express = require('express');
 const bodyParser = require('body-parser');
-const request = require('request');
+//const request = require('request');
 const config = require('./config.js');
-const context = require('./common/context.js');
-const fbUtils = require('./common/fbUtils')
-const Player = require('./models/Player.js');
+const fbUtils = require('./common/fbUtils');
+const webHook = require('./webHook.js');
 
 // use process.env.PORT at glitch
 const app = express();
@@ -26,22 +25,16 @@ app.get('/webhook', function (req, res) {
 
 // get actions from fb through webhook
 app.post('/webhook', function (req, res) {
+    console.log(req.body);
     let data = req.body;
     // Make sure this is a page subscription
     if (data.object === 'page') {
         fbUtils.retrievePageMessages(data).forEach((messageEntity) => {
-            var playerId = messageEntity.playerId;
-            var text = messageEntity.text;
-            if (!context[playerId]) {
-                context[playerId] = new Player(playerId);
-            }
-
-            console.log('Process message: ' + text);
-            context[playerId].processMessage(text);
+            webHook.proceed(messageEntity.playerId, messageEntity.text);
         });
-        // We must send back a 200, within 20 seconds, to let fb know
-        // we've successfully received the callback. Otherwise, the request
-        // will time out and fb will keep trying to resend.
-        res.sendStatus(200);
     }
+    // We must send back a 200, within 20 seconds, to let fb know
+    // we've successfully received the callback. Otherwise, the request
+    // will time out and fb will keep trying to resend.
+    res.sendStatus(200);
 });

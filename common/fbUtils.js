@@ -7,8 +7,6 @@ exports.retrievePageMessages = function(data) {
             if (event.message) {
                 // TODO: add check if there is no text (for example attachment only)
                 messages.push({playerId: event.sender.id, text: event.message.text});
-            } else {
-                console.log("Webhook received unknown event: ", event);
             }
         });
     });
