@@ -15,17 +15,20 @@ const listener = app.listen(config.server_port, function () {
 
 
 // fb webhook verification
-app.get('/webhook', function (req, res) {
+app.get('/webhook', webhookGET);
+// get actions from fb through webhook
+app.post('/webhook', webhookPOST);
+
+function webhookGET(req, res) {
     if (req.query['hub.verify_token'] === process.env.VERIFY_TOKEN) {
+        console.log(req.query['hub.challenge']);
         res.send(req.query['hub.challenge']);
     } else {
-        res.send('Error, wrong validation token');
+        res.status(401).send('Error, wrong validation token');
     }
-});
+}
 
-// get actions from fb through webhook
-app.post('/webhook', function (req, res) {
-    console.log(req.body);
+function webhookPOST(req, res) {
     let data = req.body;
     // Make sure this is a page subscription
     if (data.object === 'page') {
@@ -37,4 +40,6 @@ app.post('/webhook', function (req, res) {
     // we've successfully received the callback. Otherwise, the request
     // will time out and fb will keep trying to resend.
     res.sendStatus(200);
-});
+}
+
+module.exports = {webhookPOST, webhookGET};
