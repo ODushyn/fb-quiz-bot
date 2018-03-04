@@ -4,13 +4,16 @@ const instructionsInterceptor = require('../../handlers/InstructionsInterceptor.
 
 module.exports = WaitingForQuizAnswerState;
 
-function WaitingForQuizAnswerState(handler) {
+function WaitingForQuizAnswerState() {
     this.name = 'WAITING_FOR_QUIZ_ANSWER';
-    this.transition = function (stateContext, message) {
-        console.log('Get answer: ' + message);
-        handler.processAnswer(stateContext, message);
+    this.transition = function (player) {
+        player.getHandler().processAnswer(player);
+        player.changeState(new LookingForStartOptionState());
     };
-    this.intercept = function(stateContext, message) {
-        return instructionsInterceptor.intercept(message, stateContext, handler);
-    }
+    /*this.intercept = function(stateContext, message) {
+        return instructionsInterceptor.intercept(message, handler);
+    };*/
+    this.init = function (player) {};
 }
+
+const LookingForStartOptionState = require('./LookingForStartOptionState.js');

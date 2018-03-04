@@ -65,6 +65,5 @@ function _tipCharsNumber(answerLength, round) {
 }
 
 function _replaceAt(str, index, replacement) {
-    console.log('sdsd-> ' + str);
     return str.substr(0, index) + replacement + str.substr(index + replacement.length);
 }
