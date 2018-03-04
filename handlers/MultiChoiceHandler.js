@@ -34,6 +34,7 @@ function MultiChoiceHandler(initPlayer) {
         if (acceptedAnswers(possibleAnswers).includes(answer)) {
             clearTimeout(roundTimeout);
             player.gaveCorrectAnswer() ? _processCorrectAnswer(answer) : _processIncorrectAnswer(answer);
+            player.changeState(new LookingForStartOptionState());
         }
     };
 
