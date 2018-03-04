@@ -65,3 +65,10 @@ Categories:
     + '23. Science: Gadgets \n '
     + '24. Entertainment: Japanese Anime & Manga \n '
     + '25. Entertainment: Cartoon & Animations \n ');
+    
+    
+    Description:
+- `server.js` keeps endpoints    
+- `StateContext` main state interface with two methods: `changeState` and `processMessage`
+- `Player.js` keeps player related data
+-  `/states` folder keeps all possible states

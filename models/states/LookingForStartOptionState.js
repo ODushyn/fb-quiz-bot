@@ -1,13 +1,11 @@
 module.exports = LookingForStartOptionState;
 
-function LookingForStartOptionState(handler) {
-    this.name = 'WAITING_FOR_START_OPTION';
-    this.transition = function (stateContext, message) {
-        handler.startRound(stateContext);
+function LookingForStartOptionState() {
+    this.name = 'LOOKING_FOR_START_OPTION';
+    this.init = function(){};
+    this.transition = function (player) {
+        player.changeState(new StartNewRoundState());
     };
-    this.intercept = function(stateContext, message) {
-        return instructionsInterceptor.intercept(message, stateContext, handler);
-    }
 }
 
-const instructionsInterceptor = require('../../handlers/InstructionsInterceptor.js');
+const StartNewRoundState = require('./StartNewRoundState');

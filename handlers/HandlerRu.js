@@ -10,7 +10,7 @@ function HandlerRu(initPlayer){
         _sendQuestion();
         _runTipsHandling(stateContext, new LookingForStartOptionState(this));
         stateContext.changeState(new WaitingForQuizAnswerState(this));
-    }
+    };
 
     this.stopRound = function(stateContext){
         if(tips) {
@@ -18,14 +18,14 @@ function HandlerRu(initPlayer){
         }
         stateContext.changeState(new LookingForStartOptionState(this));
         player.sendTextMessage(translations.get('GAME_STOPPED'));
-    }
+    };
 
     this.restartRound = function(stateContext){
         if(tips) {
             tips.stop();
         }
         this.startRound();
-    }
+    };
 
     this.changeHandler = function(stateContext, newHandler){
         if(tips) {

@@ -1,26 +1,27 @@
-const MultipleChoiceHandler = require('./HandlerEn.js');
-const TipsHandler = require('./HandlerRu.js');
+const MultipleChoiceHandler = require('./MultiChoiceHandler');
 
-exports.intercept = function(message, stateContext, handler) {
+exports.intercept = function (player, handler) {
     // TODO: add two states
     console.log('Intercept: ' + message);
-    if(message === '!'){
-        handler.stopRound(stateContext);
+    if (player.wantStopRound()) {
+        handler.stopRound();
         return true;
     }
-    if(message === '-'){
-        handler.restartRound(stateContext);
+    if (player.wantRestartRound()) {
+        handler.restartRound();
         return true;
     }
-    if(message === '!en') {
-        handler.changeLanguage('en');
-        handler.changeHandler(stateContext, new MultipleChoiceHandler());
-        return true;
-    }
-    if(message === '!ru'){
-        handler.changeLanguage('ru');
-        handler.changeHandler(stateContext, new TipsHandler());
-        return true;
-    }
+    // TODO: add once 'russian version is ready'
+    /*if(message === '!en') {
+     handler.changeLanguage('en');
+     handler.changeHandler(new MultipleChoiceHandler());
+     return true;
+     }*/
+    // TODO: add once 'russian version is ready'
+    /*if(message === '!ru'){
+     handler.changeLanguage('ru');
+     handler.changeHandler(stateContext, new TipsHandler());
+     return true;
+     }*/
     return false;
-}
+};

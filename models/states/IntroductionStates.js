@@ -1,45 +1,69 @@
 exports.WaitingFirstMessageState = WaitingFirstMessageState;
-exports.WaitingLanguageState = WaitingLanguageState;
 exports.WaitingCategoryState = WaitingCategoryState;
 exports.WaitingDifficultyState = WaitingDifficultyState;
 exports.WaitingTypeState = WaitingTypeState;
 
-function WaitingFirstMessageState(introductionHandler) {
-    this.name = 'WAITING_FIRST_MESSAGE_STATE';
-    this.transition = function (stateContext, message) {
-        introductionHandler.askLanguage(stateContext, message);
+function WaitingFirstMessageState() {
+    this.name = 'WAITING_FIRST_MESSAGE';
+    this.transition = function (player) {
+        player.changeState(new WaitingCategoryState())
     };
-    this.intercept = function(){return false;}
 }
 
-function WaitingLanguageState(introductionHandler) {
-    this.name = 'WAITING_LANGUAGE_STATE';
-    this.transition = function (stateContext, message) {
-        introductionHandler.processLanguage(stateContext, message);
+function WaitingCategoryState() {
+    this.name = 'WAITING_CATEGORY';
+    this.init = function (player) {
+        player.sendTextMessage(INTRODUCTION_MESSAGES.ASK_CATEGORY);
     };
-    this.intercept = function(){return false;}
+    this.transition = function (player) {
+        let category = player.getMessage();
+        let valid = introductionHandler.processCategory(category);
+        if (valid) {
+            player.setCategory(category);
+            player.changeState(new WaitingDifficultyState())
+        }
+    };
 }
 
-function WaitingCategoryState(introductionHandler) {
-    this.name = 'WAITING_CATEGORY_STATE';
-    this.transition = function (stateContext, message) {
-        introductionHandler.processCategory(stateContext, message);
+function WaitingDifficultyState() {
+    this.name = 'WAITING_DIFFICULTY';
+    this.init = function(player) {
+        player.sendTextMessage(INTRODUCTION_MESSAGES.ASK_DIFFICULTY);
     };
-    this.intercept = function(){return false;}
+    this.transition = function (player) {
+        let difficulty = player.getMessage();
+        let valid = introductionHandler.processDifficulty(difficulty);
+        if (valid) {
+            player.setDifficulty(difficulty);
+            player.changeState(new WaitingTypeState());
+        }
+    };
 }
 
-function WaitingDifficultyState(introductionHandler) {
-    this.name = 'WAITING_DIFFICULTY_STATE';
-    this.transition = function (stateContext, message) {
-        introductionHandler.processDifficulty(stateContext, message);
+function WaitingTypeState() {
+    this.name = 'WAITING_TYPES';
+    this.init = function (player) {
+        player.sendTextMessage(INTRODUCTION_MESSAGES.ASK_TYPES);
     };
-    this.intercept = function(){return false;}
+    this.transition = function (player) {
+        let type = player.getMessage();
+        let valid = introductionHandler.processType(type);
+        if (valid) {
+            player.setType(type);
+            player.changeState(new SetupHandlerState());
+        }
+    };
 }
 
-function WaitingTypeState(introductionHandler) {
-    this.name = 'WAITING_TYPES_STATE';
-    this.transition = function (stateContext, message) {
-        introductionHandler.processType(stateContext, message);
+function SetupHandlerState() {
+    this.name = 'SETUP_HANDLER';
+    this.init = function (player) {
+        player.setupHandler();
+        player.changeState(new StartNewRoundState());
     };
-    this.intercept = function(){return false;}
+    this.transition = function (player) {};
 }
+
+let introductionHandler = require('../../handlers/IntroductionHandler');
+const INTRODUCTION_MESSAGES = require('../../constants/const.js').INTRODUCTION;
+const StartNewRoundState = require('./StartNewRoundState');
