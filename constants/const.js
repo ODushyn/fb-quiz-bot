@@ -15,7 +15,18 @@ module.exports = {
             "7": {name: "Entertainment: Television", apiValue: "14"},
             "8": {name: "Entertainment: Video Games", apiValue: "15"},
             "9": {name: "Entertainment: Board Games", apiValue: "16"},
-            "10": {name: "Science & Nature", apiValue: "17"}
+            "10": {name: "Science & Nature", apiValue: "17"},
+            "11": {name: "Science: Computers", apiValue: "18"},
+            "12": {name: "Science: Mathematics", apiValue: "19"},
+            "13": {name: "Mythology", apiValue: "20"},
+            "14": {name: "Sports", apiValue: "21"},
+            "15": {name: "Geography", apiValue: "22"},
+            "16": {name: "History", apiValue: "23"},
+            "17": {name: "Politics", apiValue: "24"},
+            "18": {name: "Art", apiValue: "25"},
+            "19": {name: "Celebrities", apiValue: "26"},
+            "20": {name: "Animals", apiValue: "27"},
+            "21": {name: "Vehicles", apiValue: "28"}
         },
         TYPES: {
             "1": {name: "Random type", apiValue: ""},
