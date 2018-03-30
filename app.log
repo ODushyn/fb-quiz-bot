@@ -1,0 +1,38 @@
+{"level":"info","message":"Your app is listening on port 3000","timestamp":"3/30/2018, 6:00:58 PM"}
+{"level":"info","message":"playerId: 0, text: 2","timestamp":"3/30/2018, 6:01:03 PM"}
+{"level":"info","message":"Create player: 0","timestamp":"3/30/2018, 6:01:03 PM"}
+{"id":0,"message":"StateContext: current state: WAITING_FIRST_MESSAGE","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:01:03 PM"}
+{"id":0,"message":"StateContext: process message: 2","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:01:03 PM"}
+{"id":0,"message":"StateContext: current state: WAITING_FIRST_MESSAGE","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:01:03 PM"}
+{"level":"error","message":"Unable to send message with id undefined to recipient undefined","timestamp":"3/30/2018, 6:01:03 PM"}
+{"level":"info","message":"Your app is listening on port 3000","timestamp":"3/30/2018, 6:01:22 PM"}
+{"level":"info","message":"Your app is listening on port 3000","timestamp":"3/30/2018, 6:05:49 PM"}
+{"level":"info","message":"playerId: 0, text: 2","timestamp":"3/30/2018, 6:05:52 PM"}
+{"level":"info","message":"Create player: 0","timestamp":"3/30/2018, 6:05:52 PM"}
+{"id":0,"message":"StateContext: current state: WAITING_FIRST_MESSAGE","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:05:52 PM"}
+{"id":0,"message":"StateContext: process message: 2","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:05:52 PM"}
+{"id":0,"message":"StateContext: current state: WAITING_FIRST_MESSAGE","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:05:52 PM"}
+{"level":"error","message":"Unable to send message with id undefined to recipient undefined","timestamp":"3/30/2018, 6:05:52 PM"}
+{"level":"info","message":"Your app is listening on port 3000","timestamp":"3/30/2018, 6:07:51 PM"}
+{"level":"info","message":"playerId: 0, text: 2","timestamp":"3/30/2018, 6:07:55 PM"}
+{"level":"info","message":"Create player: 0","timestamp":"3/30/2018, 6:07:55 PM"}
+{"id":0,"message":"StateContext: current state: WAITING_FIRST_MESSAGE","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:07:55 PM"}
+{"id":0,"message":"StateContext: process message: 2","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:07:55 PM"}
+{"id":0,"message":"StateContext: current state: WAITING_FIRST_MESSAGE","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:07:55 PM"}
+{"level":"error","message":"Unable to send message with id undefined to recipient undefined","timestamp":"3/30/2018, 6:07:55 PM"}
+{"level":"info","message":"Your app is listening on port 3000","timestamp":"3/30/2018, 6:10:13 PM"}
+{"level":"info","message":"playerId: 0, text: 2","timestamp":"3/30/2018, 6:10:17 PM"}
+{"level":"info","message":"Create player: 0","timestamp":"3/30/2018, 6:10:17 PM"}
+{"id":0,"message":"StateContext: current state: WAITING_FIRST_MESSAGE","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:10:17 PM"}
+{"id":0,"message":"StateContext: process message: 2","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:10:17 PM"}
+{"id":0,"message":"StateContext: current state: WAITING_FIRST_MESSAGE","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:10:17 PM"}
+{"level":"error","message":"Unable to send message with id undefined to recipient undefined","timestamp":"3/30/2018, 6:10:17 PM"}
+{"level":"info","message":"Your app is listening on port 3000","timestamp":"3/30/2018, 6:10:30 PM"}
+{"level":"info","message":"Your app is listening on port 3000","timestamp":"3/30/2018, 6:19:05 PM"}
+{"level":"info","message":"Your app is listening on port 3000","timestamp":"3/30/2018, 6:19:29 PM"}
+{"level":"info","message":"playerId: 0, text: 2","timestamp":"3/30/2018, 6:19:38 PM"}
+{"level":"info","message":"Create player: 0","timestamp":"3/30/2018, 6:19:38 PM"}
+{"id":0,"message":"StateContext: current state: WAITING_FIRST_MESSAGE","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:19:38 PM"}
+{"id":0,"message":"StateContext: process message: 2","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:19:38 PM"}
+{"id":0,"message":"StateContext: current state: WAITING_FIRST_MESSAGE","language":"","settings":{"MULTIPLE_CHOICE":{"introduced":false},"TIPS":{"introduced":true}},"question":"","answer":"","validAnswers":[],"handler":{},"stateContext":{},"level":"info","timestamp":"3/30/2018, 6:19:38 PM"}
+{"level":"error","message":"Unable to send message with id undefined to recipient undefined","timestamp":"3/30/2018, 6:19:38 PM"}
