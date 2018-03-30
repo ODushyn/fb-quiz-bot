@@ -1,7 +1,3 @@
-const fbAPI = require('../../common/fbAPI.js');
-const quize = require('../../constants/quize.js');
-const instructionsInterceptor = require('../../handlers/InstructionsInterceptor.js');
-
 module.exports = WaitingForQuizAnswerState;
 
 function WaitingForQuizAnswerState() {
@@ -9,10 +5,5 @@ function WaitingForQuizAnswerState() {
     this.transition = function (player) {
         player.getHandler().processAnswer(player);
     };
-    /*this.intercept = function(stateContext, message) {
-        return instructionsInterceptor.intercept(message, handler);
-    };*/
     this.init = function (player) {};
 }
-
-const LookingForStartOptionState = require('./LookingForStartOptionState.js');

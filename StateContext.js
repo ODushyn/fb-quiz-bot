@@ -8,12 +8,7 @@ function StateContext(initialState) {
     this.process = function (player) {
         console.log('StateContext: current state: ' + state.name);
         console.log('StateContext: process message: ' + player.getMessage());
-        //TODO: consider returning new state here instead of boolean
-        // create factory for state.getHandler
-        //TODO: !! implement interception
-        //let isIntercepted = intercept(player, state.getHandler());
-        //if (!isIntercepted) {
-        if(state.transition){
+        if (!intercept(player)) {
             state.transition(player);
         }
     };
@@ -21,7 +16,6 @@ function StateContext(initialState) {
     this.changeState = function (newState, player) {
         console.log('New state: ' + newState.name);
         state = newState;
-        // todo: init state if needed
         state.init(player);
     };
 }

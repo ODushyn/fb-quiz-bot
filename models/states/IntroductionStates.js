@@ -17,7 +17,7 @@ function WaitingCategoryState() {
     };
     this.transition = function (player) {
         let category = player.getMessage();
-        let valid = introductionHandler.processCategory(category);
+        let valid = player.getHandler().processCategory(category);
         if (valid) {
             player.setCategory(category);
             player.changeState(new WaitingDifficultyState())
@@ -32,7 +32,7 @@ function WaitingDifficultyState() {
     };
     this.transition = function (player) {
         let difficulty = player.getMessage();
-        let valid = introductionHandler.processDifficulty(difficulty);
+        let valid = player.getHandler().processDifficulty(difficulty);
         if (valid) {
             player.setDifficulty(difficulty);
             player.changeState(new WaitingTypeState());
@@ -47,7 +47,7 @@ function WaitingTypeState() {
     };
     this.transition = function (player) {
         let type = player.getMessage();
-        let valid = introductionHandler.processType(type);
+        let valid = player.getHandler().processType(type);
         if (valid) {
             player.setType(type);
             player.changeState(new SetupHandlerState());
@@ -58,11 +58,12 @@ function WaitingTypeState() {
 function SetupHandlerState() {
     this.name = 'SETUP_HANDLER';
     this.init = function (player) {
-        player.setupHandler();
+        player.setHandler(new MultiChoiceHandler(player));
         player.changeState(new StartNewRoundState());
     };
+    this.transition = function () {};
 }
 
-let introductionHandler = require('../../handlers/IntroductionHandler');
+let MultiChoiceHandler = require('../../handlers/MultiChoiceHandler.js');
 const INTRODUCTION_MESSAGES = require('../../constants/const.js').INTRODUCTION;
 const StartNewRoundState = require('./StartNewRoundState');

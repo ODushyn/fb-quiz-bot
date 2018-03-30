@@ -7,6 +7,12 @@ module.exports = {
     },
     processType: function(typeNum) {
         return Object.getOwnPropertyNames(QUESTION.TYPES).includes(typeNum);
+    },
+    stopRound: function () {
+        player.sendTextMessage('Game has not started yet.');
+    },
+    restartRound: function () {
+        player.sendTextMessage('Game has not started yet.');
     }
 };
 
