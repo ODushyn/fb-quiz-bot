@@ -18,7 +18,7 @@ function Player(id, stateContext) {
     this.validAnswers = [];
 
     // STATE related
-    this.handler = introductionHandler;
+    this.handler = new IntroductionHandler(this);
     this.stateContext = stateContext;
     this.getStateContext = function () {
         return this.stateContext;
@@ -95,4 +95,4 @@ function Player(id, stateContext) {
 
 const fbAPI = require('../common/fbAPI.js');
 const he = require('he');
-const introductionHandler = require('../handlers/IntroductionHandler');
+const IntroductionHandler = require('../handlers/IntroductionHandler');

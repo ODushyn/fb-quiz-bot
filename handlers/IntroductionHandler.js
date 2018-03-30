@@ -1,17 +1,21 @@
-module.exports = {
-    processCategory: function(categoryNum) {
+module.exports = IntroductionHandler;
+
+function IntroductionHandler(initPlayer) {
+    let player = initPlayer;
+
+    this.processCategory = function(categoryNum) {
         return Object.getOwnPropertyNames(QUESTION.CATEGORIES).includes(categoryNum);
     },
-    processDifficulty: function(difficultyNum) {
+    this.processAnswer = function(difficultyNum) {
         return Object.getOwnPropertyNames(QUESTION.DIFFICULTIES).includes(difficultyNum);
     },
-    processType: function(typeNum) {
+    this.processType = function(typeNum) {
         return Object.getOwnPropertyNames(QUESTION.TYPES).includes(typeNum);
     },
-    stopRound: function () {
+    this.stopRound = function () {
         player.sendTextMessage('Game has not started yet.');
     },
-    restartRound: function () {
+    this.restartRound = function () {
         player.sendTextMessage('Game has not started yet.');
     }
 };
