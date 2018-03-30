@@ -1,15 +1,16 @@
 exports.WaitingFirstMessageState = WaitingFirstMessageState;
-exports.WaitingCategoryState = WaitingCategoryState;
 exports.WaitingDifficultyState = WaitingDifficultyState;
 exports.WaitingTypeState = WaitingTypeState;
 
 function WaitingFirstMessageState() {
     this.name = 'WAITING_FIRST_MESSAGE';
     this.transition = function (player) {
-        player.changeState(new WaitingCategoryState())
+        player.changeState(new WaitingDifficultyState())
     };
 }
 
+/*
+// Not ENOUGH QUESTIONS TO DIVIDE BY CATEGORY
 function WaitingCategoryState() {
     this.name = 'WAITING_CATEGORY';
     this.init = function (player) {
@@ -23,7 +24,7 @@ function WaitingCategoryState() {
             player.changeState(new WaitingDifficultyState())
         }
     };
-}
+}*/
 
 function WaitingDifficultyState() {
     this.name = 'WAITING_DIFFICULTY';
