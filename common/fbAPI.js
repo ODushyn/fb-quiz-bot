@@ -9,16 +9,16 @@ exports.sendTextMessage = function (recipientId, messageText) {
             text: messageText
         }
     };
-    callSendAPI(messageData);
+    send(messageData);
 };
 
-function callSendAPI(messageData) {
-    console.log('Send msg: ' + messageData.message.text);
+function send(params) {
+    console.log('Send msg: ' + params.message.text);
     request({
         uri: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
         method: 'POST',
-        json: messageData
+        json: params
 
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {

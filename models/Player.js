@@ -42,7 +42,6 @@ function Player(id, stateContext) {
     };
 
     // PLAYER RELATED
-
     this.update = function (ques, ans) {
         this.question = ques;
         this.answer = ans;
@@ -61,7 +60,7 @@ function Player(id, stateContext) {
     };
 
     this.sendTextMessage = function (text) {
-        fbAPI.sendTextMessage(this.id, text);
+        fbAPI.sendTextMessage(this.id, he.decode(text));
     };
 
     this.getMessage = function () {
@@ -95,5 +94,5 @@ function Player(id, stateContext) {
 }
 
 const fbAPI = require('../common/fbAPI.js');
-const context = require('../common/context');
+const he = require('he');
 let MultiChoiceHandler = require('../handlers/MultiChoiceHandler.js');

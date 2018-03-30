@@ -1,5 +1,4 @@
 module.exports = {
-
     processCategory: function(categoryNum) {
         return Object.getOwnPropertyNames(QUESTION.CATEGORIES).includes(categoryNum);
     },

@@ -61,7 +61,6 @@ function SetupHandlerState() {
         player.setupHandler();
         player.changeState(new StartNewRoundState());
     };
-    this.transition = function (player) {};
 }
 
 let introductionHandler = require('../../handlers/IntroductionHandler');

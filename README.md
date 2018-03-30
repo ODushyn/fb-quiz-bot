@@ -1,3 +1,7 @@
+
+# Run
+`nodemon server.js` to start server
+
 # fb-quiz-bot
 The bot for playing quiz on Facebook via Messanger
 
@@ -26,7 +30,7 @@ Issues:
 // + add basic commands set: start(type anything), stop(!), skip(-).
 // + show asnwer if player does not provide correct one. add time between last tip and correct answer
 // + add english version 
-// - decode english questions
+// + decode english questions
 // - add instruction description to the fb page and start message
 // - add log file
 

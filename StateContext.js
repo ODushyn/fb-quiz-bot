@@ -13,8 +13,9 @@ function StateContext(initialState) {
         //TODO: !! implement interception
         //let isIntercepted = intercept(player, state.getHandler());
         //if (!isIntercepted) {
+        if(state.transition){
             state.transition(player);
-        //}
+        }
     };
 
     this.changeState = function (newState, player) {
