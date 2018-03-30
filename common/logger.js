@@ -21,7 +21,7 @@ let logger = new (winston.Logger)({
             formatter: formatter,
             level: 'error'
         }),
-        new (winston.transports.Console)({level: 'error'})
+        new (winston.transports.Console)({level: 'info'})
     ],
     exceptionHandlers: [
         new (winston.transports.File)({filename: 'exceptions.log'})
