@@ -1,31 +1,29 @@
 module.exports = MultiChoiceHandler;
 
 function MultiChoiceHandler(initPlayer) {
-    let ROUND_TIME = 30000;
+    let ROUND_TIME = 1000;
+    let QUESTIONS = 10;
     let roundTimeout;
+    let questionNumber = 0;
     let possibleAnswers;
     let player = initPlayer;
 
     this.startRound = function () {
-        _sendQuestion();
-        _runRoundTimeout();
+        console.log('QUESTION number: ' + questionNumber);
+        _startRound(questionNumber++);
     };
 
     this.stopRound = function () {
+        questionNumber = 0;
         clearTimeout(roundTimeout);
         player.sendTextMessage('Game is stopped.' + '\n' + 'Type anything to continue.');
         player.changeState(new LookingForStartOptionState());
     };
 
-    this.restartRound = function () {
-        clearTimeout(roundTimeout);
-        player.changeState(new StartNewRoundState());
-    };
-
     function _runRoundTimeout() {
         roundTimeout = setTimeout(function () {
-            player.sendTextMessage('Time is over.' + '\n' + 'Correct answer was: ' + '*' + player.answer + '*' + '\n' + 'Type anything to continue.');
-            player.changeState(new LookingForStartOptionState());
+            player.sendTextMessage('Time is over.' + '\n' + 'Correct answer was: ' + '*' + player.answer + '*');
+            this.startRound();
         }, ROUND_TIME);
     }
 
@@ -34,12 +32,17 @@ function MultiChoiceHandler(initPlayer) {
         if (acceptedAnswers(possibleAnswers).includes(answer)) {
             clearTimeout(roundTimeout);
             player.gaveCorrectAnswer() ? _processCorrectAnswer(answer) : _processIncorrectAnswer(answer);
-            player.changeState(new LookingForStartOptionState());
+            if (questionNumber < QUESTIONS) {
+                this.startRound();
+            } else {
+                player.changeState(new LookingForStartOptionState());
+            }
         }
     };
 
-    this.setPlayer = function (newPlayer) {
-        player = newPlayer;
+    function _startRound(questionNumber) {
+        _sendQuestion();
+        _runRoundTimeout();
     };
 
     function _sendQuestion() {

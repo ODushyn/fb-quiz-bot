@@ -1,15 +1,17 @@
 exports.WaitingFirstMessageState = WaitingFirstMessageState;
-exports.WaitingCategoryState = WaitingCategoryState;
+//exports.WaitingCategoryState = WaitingCategoryState;
 exports.WaitingDifficultyState = WaitingDifficultyState;
 exports.WaitingTypeState = WaitingTypeState;
 
 function WaitingFirstMessageState() {
     this.name = 'WAITING_FIRST_MESSAGE';
     this.transition = function (player) {
-        player.changeState(new WaitingCategoryState())
+        player.changeState(new WaitingDifficultyState())
     };
 }
 
+/*
+// Not ENOUGH QUESTIONS TO DIVIDE BY CATEGORY
 function WaitingCategoryState() {
     this.name = 'WAITING_CATEGORY';
     this.init = function (player) {
@@ -23,7 +25,7 @@ function WaitingCategoryState() {
             player.changeState(new WaitingDifficultyState())
         }
     };
-}
+}*/
 
 function WaitingDifficultyState() {
     this.name = 'WAITING_DIFFICULTY';
@@ -59,6 +61,7 @@ function SetupHandlerState() {
     this.name = 'SETUP_HANDLER';
     this.init = function (player) {
         player.setHandler(new MultiChoiceHandler(player));
+        player.sendTextMessage("You've got 30 sec for each question. \n Type '!' to stop the game.");
         player.changeState(new StartNewRoundState());
     };
     this.transition = function () {};

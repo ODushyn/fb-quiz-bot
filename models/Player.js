@@ -6,11 +6,9 @@ function Player(id, stateContext) {
     this.message = null;
     this.language = '';
     this.settings = {
+        category: "1",
         MULTIPLE_CHOICE: {
             introduced: false
-        },
-        TIPS: {
-            introduced: true
         }
     };
     this.question = '';
@@ -95,4 +93,5 @@ function Player(id, stateContext) {
 
 const fbAPI = require('../common/fbAPI.js');
 const he = require('he');
+const question = require('../constants/const.js').QUESTION;
 const IntroductionHandler = require('../handlers/IntroductionHandler');
