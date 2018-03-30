@@ -59,6 +59,7 @@ function SetupHandlerState() {
     this.name = 'SETUP_HANDLER';
     this.init = function (player) {
         player.setHandler(new MultiChoiceHandler(player));
+        player.sendTextMessage("You've got 30 sec for each question.\nType '!' to stop the game.");
         player.changeState(new StartNewRoundState());
     };
     this.transition = function () {};

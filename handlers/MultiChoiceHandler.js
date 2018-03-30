@@ -2,30 +2,32 @@ module.exports = MultiChoiceHandler;
 
 function MultiChoiceHandler(initPlayer) {
     let ROUND_TIME = 30000;
-    let roundTimeout;
+    let QUESTIONS = 5;
+    let questionNumber = 0;
+    let correctAnswersNumber = 0;
     let possibleAnswers;
+    let roundTimeout;
     let player = initPlayer;
 
     this.startRound = function () {
-        _sendQuestion();
-        _runRoundTimeout();
+        _resetStatistics();
+        _startNextRound();
     };
 
     this.stopRound = function () {
         clearTimeout(roundTimeout);
-        player.sendTextMessage('Game is stopped.' + '\n' + 'Type anything to continue.');
+        player.sendTextMessage(
+            'Game is stopped.' +
+            _score() + '\n' +
+            'Type anything to start new round.'
+        );
         player.changeState(new LookingForStartOptionState());
-    };
-
-    this.restartRound = function () {
-        clearTimeout(roundTimeout);
-        player.changeState(new StartNewRoundState());
     };
 
     function _runRoundTimeout() {
         roundTimeout = setTimeout(function () {
-            player.sendTextMessage('Time is over.' + '\n' + 'Correct answer was: ' + '*' + player.answer + '*' + '\n' + 'Type anything to continue.');
-            player.changeState(new LookingForStartOptionState());
+            player.sendTextMessage('Time is over.' + '\n' + 'Correct answer was: ' + '*' + player.answer + '*');
+            _startNextRound();
         }, ROUND_TIME);
     }
 
@@ -34,13 +36,31 @@ function MultiChoiceHandler(initPlayer) {
         if (acceptedAnswers(possibleAnswers).includes(answer)) {
             clearTimeout(roundTimeout);
             player.gaveCorrectAnswer() ? _processCorrectAnswer(answer) : _processIncorrectAnswer(answer);
-            player.changeState(new LookingForStartOptionState());
+            _startNextRound();
         }
     };
 
-    this.setPlayer = function (newPlayer) {
-        player = newPlayer;
+    function _startNextRound() {
+        setTimeout(function () {
+            if (questionNumber + 1 <= QUESTIONS) {
+                questionNumber++;
+                _sendQuestion();
+                _runRoundTimeout();
+            } else {
+                player.sendTextMessage(
+                    'Round is finished.' + '\n' +
+                    _score() + '\n' +
+                    'Type anything to start new round.'
+                );
+                player.changeState(new LookingForStartOptionState());
+            }
+        }, 2000)
     };
+
+    function _resetStatistics() {
+        questionNumber = 0;
+        correctAnswersNumber = 0;
+    }
 
     function _sendQuestion() {
         let category = player.settings.category;
@@ -72,7 +92,7 @@ function MultiChoiceHandler(initPlayer) {
                 let randIndex = Math.floor(Math.random() * (possibleAnswers.length + 1));
                 possibleAnswers.splice(randIndex, 0, result.correct_answer);
                 player.update(result.question, (randIndex + 1).toString());
-                player.sendTextMessage(result.question + '\n' + 'Type the number:\n' + _formatPossibleAnswers(possibleAnswers));
+                player.sendTextMessage(result.question + '\n' + 'Type the number:\n' + _formatPossibleAnswers(possibleAnswers), 1000);
             });
         }).on("error", (err) => {
             logger.error("Error: " + err.message, player);
@@ -80,11 +100,12 @@ function MultiChoiceHandler(initPlayer) {
     }
 
     function _processIncorrectAnswer() {
-        player.sendTextMessage("Unfortunately, correct answer was: " + '*' + player.answer + '*' + '\n' + 'Type anything to continue.');
+        player.sendTextMessage("Unfortunately, correct answer was: " + '*' + player.answer + '*');
     }
 
     function _processCorrectAnswer() {
-        player.sendTextMessage('Correct!' + '\n' + 'Type anything to continue.');
+        correctAnswersNumber++;
+        player.sendTextMessage('Correct!');
     }
 
     function _formatPossibleAnswers(possibleAnswers) {
@@ -93,6 +114,10 @@ function MultiChoiceHandler(initPlayer) {
             formattedAnswers += (index + 1) + '. ' + answer + '\n';
         });
         return formattedAnswers;
+    }
+
+    function _score() {
+        return 'Your score: ' + correctAnswersNumber + '/' + questionNumber;
     }
 
     function acceptedAnswers(possibleAnswers) {
