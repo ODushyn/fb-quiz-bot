@@ -1,7 +1,6 @@
 // server and libs
 const express = require('express');
 const bodyParser = require('body-parser');
-//const request = require('request');
 const config = require('./config.js');
 const fbUtils = require('./common/fbUtils');
 const webHook = require('./webHook.js');
@@ -9,7 +8,7 @@ const webHook = require('./webHook.js');
 // use process.env.PORT at glitch
 const app = express();
 app.use(bodyParser.json());
-const listener = app.listen(config.server_port, function () {
+const listener = app.listen(config.port, function () {
     console.log('Your app is listening on port ' + listener.address().port);
 });
 
@@ -30,7 +29,6 @@ function webhookGET(req, res) {
 
 function webhookPOST(req, res) {
     let data = req.body;
-    // Make sure this is a page subscription
     if (data.object === 'page') {
         fbUtils.retrievePageMessages(data).forEach((messageEntity) => {
             webHook.proceed(messageEntity.playerId, messageEntity.text);
