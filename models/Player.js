@@ -18,7 +18,7 @@ function Player(id, stateContext) {
     this.validAnswers = [];
 
     // STATE related
-    this.handler = null;
+    this.handler = introductionHandler;
     this.stateContext = stateContext;
     this.getStateContext = function () {
         return this.stateContext;
@@ -33,8 +33,8 @@ function Player(id, stateContext) {
         this.stateContext.changeState(newState, this)
     };
 
-    this.setupHandler = function() {
-      this.handler = new MultiChoiceHandler(this);
+    this.setHandler = function(handler) {
+      this.handler = handler;
     };
 
     this.getHandler = function () {
@@ -89,10 +89,10 @@ function Player(id, stateContext) {
     };
 
     this.wantRestartRound = function () {
-        this.message === '-'
+        return this.message === '-'
     };
 }
 
 const fbAPI = require('../common/fbAPI.js');
 const he = require('he');
-let MultiChoiceHandler = require('../handlers/MultiChoiceHandler.js');
+const introductionHandler = require('../handlers/IntroductionHandler');

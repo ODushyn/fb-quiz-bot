@@ -19,7 +19,7 @@ function MultiChoiceHandler(initPlayer) {
 
     this.restartRound = function () {
         clearTimeout(roundTimeout);
-        return this.startRound();
+        player.changeState(new StartNewRoundState());
     };
 
     function _runRoundTimeout() {
@@ -105,7 +105,7 @@ function MultiChoiceHandler(initPlayer) {
     }
 }
 
-const utils = require('../common/utils.js');
 const question = require('../constants/const.js').QUESTION;
 const https = require('https');
 const LookingForStartOptionState = require('../models/states/LookingForStartOptionState.js');
+const StartNewRoundState = require('../models/states/StartNewRoundState.js');
