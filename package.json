@@ -24,7 +24,8 @@
     "body-parser": "*",
     "express": "^4.15.3",
     "he": "^1.1.1",
-    "request": "^2.72.0"
+    "request": "^2.72.0",
+    "winston": "^2.4.1"
   },
   "keywords": [
     "messenger",

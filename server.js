@@ -1,17 +1,17 @@
 // server and libs
 const express = require('express');
 const bodyParser = require('body-parser');
+const logger = require('./common/logger');
 const config = require('./config.js');
 const fbUtils = require('./common/fbUtils');
 const webHook = require('./webHook.js');
 
-// use process.env.PORT at glitch
 const app = express();
 app.use(bodyParser.json());
-const listener = app.listen(config.port, function () {
-    console.log('Your app is listening on port ' + listener.address().port);
-});
 
+const listener = app.listen(config.port, function () {
+    logger.info('Your app is listening on port ' + listener.address().port);
+});
 
 // fb webhook verification
 app.get('/webhook', webhookGET);
@@ -20,7 +20,6 @@ app.post('/webhook', webhookPOST);
 
 function webhookGET(req, res) {
     if (req.query['hub.verify_token'] === process.env.VERIFY_TOKEN) {
-        console.log(req.query['hub.challenge']);
         res.send(req.query['hub.challenge']);
     } else {
         res.status(401).send('Error, wrong validation token');
@@ -39,5 +38,10 @@ function webhookPOST(req, res) {
     // will time out and fb will keep trying to resend.
     res.sendStatus(200);
 }
+
+app.use(function logErrors(err, req, res, next) {
+    logger.error(err.stack);
+    next(err);
+});
 
 module.exports = {webhookPOST, webhookGET};

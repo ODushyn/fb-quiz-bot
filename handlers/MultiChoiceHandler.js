@@ -65,7 +65,6 @@ function MultiChoiceHandler(initPlayer) {
             });
             // The whole response has been received.
             resp.on('end', () => {
-                console.log(data);
                 //TODO: check if no questions found (ask to change category) {"response_code":0, results: []}
                 let result = JSON.parse(data).results[0];
                 possibleAnswers = result.incorrect_answers;
@@ -76,7 +75,7 @@ function MultiChoiceHandler(initPlayer) {
                 player.sendTextMessage(result.question + '\n' + 'Type the number:\n' + _formatPossibleAnswers(possibleAnswers));
             });
         }).on("error", (err) => {
-            console.log("Error: " + err.message);
+            logger.error("Error: " + err.message, player);
         });
     }
 
@@ -107,5 +106,6 @@ function MultiChoiceHandler(initPlayer) {
 
 const question = require('../constants/const.js').QUESTION;
 const https = require('https');
+const logger = require('../common/logger');
 const LookingForStartOptionState = require('../models/states/LookingForStartOptionState.js');
 const StartNewRoundState = require('../models/states/StartNewRoundState.js');

@@ -6,7 +6,7 @@ function IntroductionHandler(initPlayer) {
     this.processCategory = function(categoryNum) {
         return Object.getOwnPropertyNames(QUESTION.CATEGORIES).includes(categoryNum);
     },
-    this.processAnswer = function(difficultyNum) {
+    this.processDifficulty = function(difficultyNum) {
         return Object.getOwnPropertyNames(QUESTION.DIFFICULTIES).includes(difficultyNum);
     },
     this.processType = function(typeNum) {

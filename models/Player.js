@@ -17,6 +17,10 @@ function Player(id, stateContext) {
     this.answer = '';
     this.validAnswers = [];
 
+    this.getId = function(){
+        return this.id;
+    };
+
     // STATE related
     this.handler = new IntroductionHandler(this);
     this.stateContext = stateContext;
@@ -77,10 +81,6 @@ function Player(id, stateContext) {
 
     this.setType = function (type) {
         this.settings.type = type;
-    };
-
-    this.reset = function () {
-        // TODO reset here
     };
 
     // intercept commands

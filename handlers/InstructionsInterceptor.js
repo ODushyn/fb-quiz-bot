@@ -1,5 +1,4 @@
 module.exports = function (player) {
-    console.log('Intercept: ' + player.getMessage());
     if (player.wantStopRound()) {
         player.getHandler().stopRound();
         return true;
