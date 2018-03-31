@@ -3,8 +3,8 @@ module.exports = IntroductionHandler;
 function IntroductionHandler(initPlayer) {
     let player = initPlayer;
 
-    this.processCategory = function(categoryNum) {
-        return Object.getOwnPropertyNames(QUESTION.CATEGORIES).includes(categoryNum);
+    this.processQuestionsNumber = function(questionsNumber) {
+        return Object.getOwnPropertyNames(QUESTION.NUMBER_PER_ROUND).includes(questionsNumber);
     },
     this.processDifficulty = function(difficultyNum) {
         return Object.getOwnPropertyNames(QUESTION.DIFFICULTIES).includes(difficultyNum);

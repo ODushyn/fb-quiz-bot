@@ -1,31 +1,30 @@
 exports.WaitingFirstMessageState = WaitingFirstMessageState;
 exports.WaitingDifficultyState = WaitingDifficultyState;
+exports.WaitingQuestionsNumberPerRoundState = WaitingQuestionsNumberPerRoundState;
 exports.WaitingTypeState = WaitingTypeState;
 
 function WaitingFirstMessageState() {
     this.name = 'WAITING_FIRST_MESSAGE';
     this.transition = function (player) {
         player.sendTextMessage('We are playing round. Round contains 5 questions.');
-        player.changeState(new WaitingDifficultyState())
+        player.changeState(new WaitingQuestionsNumberPerRoundState())
     };
 }
 
-/*
-// Not ENOUGH QUESTIONS TO DIVIDE BY CATEGORY
-function WaitingCategoryState() {
-    this.name = 'WAITING_CATEGORY';
+function WaitingQuestionsNumberPerRoundState() {
+    this.name = 'WAITING_QUESTIONS_NUMBER';
     this.init = function (player) {
-        player.sendTextMessage(INTRODUCTION_MESSAGES.ASK_CATEGORY);
+        player.sendTextMessage(INTRODUCTION_MESSAGES.ASK_QUESTIONS_NUMBER_PER_ROUND);
     };
     this.transition = function (player) {
-        let category = player.getMessage();
-        let valid = player.getHandler().processCategory(category);
+        let questionsNumber = player.getMessage();
+        let valid = player.getHandler().processQuestionsNumber(questionsNumber);
         if (valid) {
-            player.setCategory(category);
+            player.setQuestionsNumberPerRound(questionsNumber);
             player.changeState(new WaitingDifficultyState())
         }
     };
-}*/
+}
 
 function WaitingDifficultyState() {
     this.name = 'WAITING_DIFFICULTY';

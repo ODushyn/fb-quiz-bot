@@ -5,6 +5,10 @@ module.exports = {
         "2": {shortcut: 'ru'}
     },
     QUESTION: {
+        NUMBER_PER_ROUND: {
+            "1": 1,
+            "2": 2
+        },
         CATEGORIES: {
             "1": {name: "Random Category", apiValue: ""},
             "2": {name: "General Knowledge", apiValue: "9"},
@@ -41,6 +45,9 @@ module.exports = {
         }
     },
     INTRODUCTION: {
+        ASK_QUESTIONS_NUMBER_PER_ROUND: ' Choose number of questions per round: \n'
+        + '1. 5 questions. \n'
+        + '2. 10 questions \n',
         ASK_CATEGORY: ' Choose question category: \n'
         + '1. Random Category. \n'
         + '2. General Knowledge \n'

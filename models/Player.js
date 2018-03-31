@@ -1,29 +1,20 @@
 module.exports = Player;
 
 function Player(id, stateContext) {
-    // USER properties
     this.id = id;
     this.message = null;
-    this.language = '';
     this.settings = {
-        category: "1",
+        category: "1", // always random category
         MULTIPLE_CHOICE: {
             introduced: false
         }
     };
-    this.question = '';
-    this.answer = '';
-    this.validAnswers = [];
+    this.quiz = [];
+    this.handler = new IntroductionHandler(this);
+    this.stateContext = stateContext;
 
     this.getId = function(){
         return this.id;
-    };
-
-    // STATE related
-    this.handler = new IntroductionHandler(this);
-    this.stateContext = stateContext;
-    this.getStateContext = function () {
-        return this.stateContext;
     };
 
     this.process = function (message) {
@@ -44,21 +35,16 @@ function Player(id, stateContext) {
     };
 
     // PLAYER RELATED
-    this.update = function (ques, ans) {
-        this.question = ques;
-        this.answer = ans;
+    this.setQuiz = function (quiz) {
+        this.quiz = quiz;
     };
 
-    this.gaveCorrectAnswer = function () {
-        return this.answer.toLowerCase() === this.message.toLowerCase();
+    this.gaveCorrectAnswer = function (num = 0) {
+        return this.quiz[num].correctOption.toLowerCase() === this.message.toLowerCase();
     };
 
-    this.gaveValidAnswer = function () {
-        return this.validAnswers.contains(this.message);
-    };
-
-    this.introductionDone = function (name) {
-        return this.settings[name].introduced;
+    this.gaveValidAnswer = function (num = 0) {
+        return this.quiz[num].possibleOptions.includes(this.message);
     };
 
     this.sendTextMessage = function (text) {
@@ -69,8 +55,16 @@ function Player(id, stateContext) {
         return this.message;
     };
 
-    this.setCategory = function (category) {
-        this.settings.category = category;
+    this.getQuestion = function(num = 0){
+      return this.quiz[num].question;
+    };
+
+    this.getPossibleAnswers = function(num = 0){
+      return this.quiz[num].possibleAnswers;
+    };
+
+    this.setQuestionsNumberPerRound = function (questionsNumber) {
+        this.settings.questionsNumberPerRound = questionsNumber;
     };
 
     this.setDifficulty = function (difficulty) {
@@ -93,5 +87,4 @@ function Player(id, stateContext) {
 
 const fbAPI = require('../common/fbAPI.js');
 const he = require('he');
-const question = require('../constants/const.js').QUESTION;
 const IntroductionHandler = require('../handlers/IntroductionHandler');

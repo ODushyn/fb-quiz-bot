@@ -2,15 +2,15 @@ module.exports = MultiChoiceHandler;
 
 function MultiChoiceHandler(initPlayer) {
     let ROUND_TIME = 30000;
-    let QUESTIONS = 5;
+    let QUESTIONS = initPlayer.settings.questionsNumberPerRound;
     let questionNumber = 0;
     let correctAnswersNumber = 0;
-    let possibleAnswers;
     let roundTimeout;
     let player = initPlayer;
 
     this.startRound = function () {
         _resetStatistics();
+        _setUpRoundQuiz();
         _startNextRound();
     };
 
@@ -24,21 +24,20 @@ function MultiChoiceHandler(initPlayer) {
         player.changeState(new LookingForStartOptionState());
     };
 
+    this.processAnswer = function (player) {
+        if (player.gaveValidAnswer()) {
+            clearTimeout(roundTimeout);
+            player.gaveCorrectAnswer() ? _processCorrectAnswer() : _processIncorrectAnswer();
+            _startNextRound();
+        }
+    };
+
     function _runRoundTimeout() {
         roundTimeout = setTimeout(function () {
             player.sendTextMessage('Time is over.' + '\n' + 'Correct answer was: ' + '*' + player.answer + '*');
             _startNextRound();
         }, ROUND_TIME);
     }
-
-    this.processAnswer = function (player) {
-        let answer = player.getMessage();
-        if (acceptedAnswers(possibleAnswers).includes(answer)) {
-            clearTimeout(roundTimeout);
-            player.gaveCorrectAnswer() ? _processCorrectAnswer(answer) : _processIncorrectAnswer(answer);
-            _startNextRound();
-        }
-    };
 
     function _startNextRound() {
         setTimeout(function () {
@@ -62,21 +61,8 @@ function MultiChoiceHandler(initPlayer) {
         correctAnswersNumber = 0;
     }
 
-    function _sendQuestion() {
-        let category = player.settings.category;
-        let difficulty = player.settings.difficulty;
-        let type = player.settings.type;
-        // TODO: refactor in small functions
-        let url = 'https://opentdb.com/api.php?amount=1';
-        if (question.CATEGORIES[category].apiValue) {
-            url += '&category=' + question.CATEGORIES[category].apiValue;
-        }
-        if (question.DIFFICULTIES[difficulty].apiValue) {
-            url += '&difficulty=' + question.DIFFICULTIES[difficulty].apiValue;
-        }
-        if (question.TYPES[type].apiValue) {
-            url += '&type=' + question.TYPES[type].apiValue;
-        }
+    function _setUpRoundQuiz() {
+        const url = _buildURL();
         https.get(url, (resp) => {
             let data = '';
             // A chunk of data has been received.
@@ -85,14 +71,8 @@ function MultiChoiceHandler(initPlayer) {
             });
             // The whole response has been received.
             resp.on('end', () => {
-                //TODO: check if no questions found (ask to change category) {"response_code":0, results: []}
-                let result = JSON.parse(data).results[0];
-                possibleAnswers = result.incorrect_answers;
-                // randomly insert correct answer;
-                let randIndex = Math.floor(Math.random() * (possibleAnswers.length + 1));
-                possibleAnswers.splice(randIndex, 0, result.correct_answer);
-                player.update(result.question, (randIndex + 1).toString());
-                player.sendTextMessage(result.question + '\n' + 'Type the number:\n' + _formatPossibleAnswers(possibleAnswers), 1000);
+                player.setQuiz(_createRoundQuiz(JSON.parse(data).results));
+                //
             });
         }).on("error", (err) => {
             logger.error("Error: " + err.message, player);
@@ -108,6 +88,54 @@ function MultiChoiceHandler(initPlayer) {
         player.sendTextMessage('Correct!');
     }
 
+    function _buildURL() {
+        const baseUrl = 'https://opentdb.com/api.php?';
+        let category = player.settings.category;
+        let difficulty = player.settings.difficulty;
+        let type = player.settings.type;
+        let questionsNumPerRound = player.settings.questionsNumberPerRound;
+        let url = baseUrl + 'amount=' + question.NUMBER_PER_ROUND[questionsNumPerRound];
+        if (question.CATEGORIES[category].apiValue) {
+            url += '&category=' + question.CATEGORIES[category].apiValue;
+        }
+        if (question.DIFFICULTIES[difficulty].apiValue) {
+            url += '&difficulty=' + question.DIFFICULTIES[difficulty].apiValue;
+        }
+        if (question.TYPES[type].apiValue) {
+            url += '&type=' + question.TYPES[type].apiValue;
+        }
+        return url;
+    }
+
+    function _createRoundQuiz(results) {
+        return results.map(result =>
+            Object.assign(
+                result,
+                extension(result.correct_answer, result.incorrect_answers)
+            )
+        );
+
+        function extension(corAnswer, incAnswers) {
+            let correctOption = Math.floor(Math.random() * (incAnswers.length + 1));
+            let possibleAnswers = [
+                ...incAnswers.slice(0, correctOption),
+                corAnswer,
+                ...incAnswers.slice(correctOption)
+            ];
+            return {
+                possibleAnswers: possibleAnswers,
+                possibleOptions: Array.from(possibleAnswers, (ans, index) => (index + 1).toString()),
+                correctOption: (correctOption + 1).toString()
+            }
+        }
+    }
+
+    function _sendQuestion(){
+        let question = player.getQuestion(questionNumber);
+        let possibleAnswers = player.getPossibleAnswers(questionNumber);
+        player.sendTextMessage(question + '\n' + 'Type the number:\n' + _formatPossibleAnswers(possibleAnswers), 1000);
+    }
+
     function _formatPossibleAnswers(possibleAnswers) {
         let formattedAnswers = '';
         possibleAnswers.forEach((answer, index) => {
@@ -118,14 +146,6 @@ function MultiChoiceHandler(initPlayer) {
 
     function _score() {
         return 'Your score: ' + correctAnswersNumber + '/' + questionNumber;
-    }
-
-    function acceptedAnswers(possibleAnswers) {
-        let acceptedAnswers = [];
-        for (let i = 0; i < possibleAnswers.length; i++) {
-            acceptedAnswers.push((i + 1).toString());
-        }
-        return acceptedAnswers;
     }
 }
 
