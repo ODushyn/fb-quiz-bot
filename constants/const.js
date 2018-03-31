@@ -6,8 +6,8 @@ module.exports = {
     },
     QUESTION: {
         NUMBER_PER_ROUND: {
-            "1": 1,
-            "2": 2
+            "1": 5,
+            "2": 10
         },
         CATEGORIES: {
             "1": {name: "Random Category", apiValue: ""},

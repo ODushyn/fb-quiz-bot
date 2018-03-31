@@ -13,7 +13,7 @@ function Player(id, stateContext) {
     this.handler = new IntroductionHandler(this);
     this.stateContext = stateContext;
 
-    this.getId = function(){
+    this.getId = function () {
         return this.id;
     };
 
@@ -26,8 +26,8 @@ function Player(id, stateContext) {
         this.stateContext.changeState(newState, this)
     };
 
-    this.setHandler = function(handler) {
-      this.handler = handler;
+    this.setHandler = function (handler) {
+        this.handler = handler;
     };
 
     this.getHandler = function () {
@@ -39,12 +39,12 @@ function Player(id, stateContext) {
         this.quiz = quiz;
     };
 
-    this.gaveCorrectAnswer = function (num = 0) {
-        return this.quiz[num].correctOption.toLowerCase() === this.message.toLowerCase();
+    this.gaveCorrectAnswer = function (num = 1) {
+        return this.quiz[num - 1].correctOption.toLowerCase() === this.message.toLowerCase();
     };
 
-    this.gaveValidAnswer = function (num = 0) {
-        return this.quiz[num].possibleOptions.includes(this.message);
+    this.gaveValidAnswer = function (num = 1) {
+        return this.quiz[num - 1].possibleOptions.includes(this.message);
     };
 
     this.sendTextMessage = function (text) {
@@ -55,17 +55,41 @@ function Player(id, stateContext) {
         return this.message;
     };
 
-    this.getQuestion = function(num = 0){
-      return this.quiz[num].question;
+    this.getQuestion = function (num = 1) {
+        return this.quiz[num - 1].question;
     };
 
-    this.getCorrectOption = function(num = 0){
-        return this.quiz[num].correctOption;
+    this.getCorrectOption = function (num = 1) {
+        return this.quiz[num - 1].correctOption;
     };
 
-    this.getPossibleAnswers = function(num = 0){
-      return this.quiz[num].possibleAnswers;
+    this.getPossibleAnswers = function (num = 1) {
+        return this.quiz[num - 1].possibleAnswers;
     };
+
+    this.getDifficulty = function () {
+        let difficulty = this.settings.difficulty;
+        return question.DIFFICULTIES[difficulty];
+    };
+
+    this.getCategory = function () {
+        let category = this.settings.category;
+        return question.CATEGORIES[category];
+    }
+
+    this.getQuestionCategory = function (num = 1) {
+        return this.quiz[num - 1].category;
+    }
+
+    this.getType = function () {
+        let type = this.settings.type
+        return question.TYPES[type];
+    }
+
+    this.getQuestionsNumberPerRound = function () {
+        let questionsNumberPerRound = this.settings.questionsNumberPerRound;
+        return question.NUMBER_PER_ROUND[questionsNumberPerRound];
+    }
 
     this.setQuestionsNumberPerRound = function (questionsNumber) {
         this.settings.questionsNumberPerRound = questionsNumber;
@@ -92,3 +116,4 @@ function Player(id, stateContext) {
 const fbAPI = require('../common/fbAPI.js');
 const he = require('he');
 const IntroductionHandler = require('../handlers/IntroductionHandler');
+const question = require('../constants/const.js').QUESTION;

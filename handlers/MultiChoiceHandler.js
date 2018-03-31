@@ -1,8 +1,8 @@
 module.exports = MultiChoiceHandler;
 
 function MultiChoiceHandler(initPlayer) {
-    let ROUND_TIME = 30000;
-    let QUESTIONS = initPlayer.settings.questionsNumberPerRound;
+    let ROUND_TIME = 3000;
+    let QUESTIONS = initPlayer.getQuestionsNumberPerRound();
     let questionNumber = 0;
     let correctAnswersNumber = 0;
     let roundTimeout;
@@ -11,7 +11,6 @@ function MultiChoiceHandler(initPlayer) {
     this.startRound = function () {
         _resetStatistics();
         _setUpRoundQuiz();
-        _startNextRound();
     };
 
     this.stopRound = function () {
@@ -56,11 +55,6 @@ function MultiChoiceHandler(initPlayer) {
         }, 2000)
     };
 
-    function _resetStatistics() {
-        questionNumber = 0;
-        correctAnswersNumber = 0;
-    }
-
     function _setUpRoundQuiz() {
         const url = _buildURL();
         https.get(url, (resp) => {
@@ -72,7 +66,7 @@ function MultiChoiceHandler(initPlayer) {
             // The whole response has been received.
             resp.on('end', () => {
                 player.setQuiz(_createRoundQuiz(JSON.parse(data).results));
-                //
+                _startNextRound();
             });
         }).on("error", (err) => {
             logger.error("Error: " + err.message, player);
@@ -80,7 +74,7 @@ function MultiChoiceHandler(initPlayer) {
     }
 
     function _processIncorrectAnswer() {
-        player.sendTextMessage("Unfortunately, correct answer was: " + '*' + player.answer + '*');
+        player.sendTextMessage("Unfortunately, correct answer was: " + '*' + player.getCorrectOption(questionNumber) + '*');
     }
 
     function _processCorrectAnswer() {
@@ -90,19 +84,18 @@ function MultiChoiceHandler(initPlayer) {
 
     function _buildURL() {
         const baseUrl = 'https://opentdb.com/api.php?';
-        let category = player.settings.category;
-        let difficulty = player.settings.difficulty;
-        let type = player.settings.type;
-        let questionsNumPerRound = player.settings.questionsNumberPerRound;
-        let url = baseUrl + 'amount=' + question.NUMBER_PER_ROUND[questionsNumPerRound];
-        if (question.CATEGORIES[category].apiValue) {
-            url += '&category=' + question.CATEGORIES[category].apiValue;
+        let category = player.getCategory();
+        let difficulty = player.getDifficulty();
+        let type = player.getType();
+        let url = baseUrl + 'amount=' + player.getQuestionsNumberPerRound();
+        if (category.apiValue) {
+            url += '&category=' + category.apiValue;
         }
-        if (question.DIFFICULTIES[difficulty].apiValue) {
-            url += '&difficulty=' + question.DIFFICULTIES[difficulty].apiValue;
+        if (difficulty.apiValue) {
+            url += '&difficulty=' + difficulty.apiValue;
         }
-        if (question.TYPES[type].apiValue) {
-            url += '&type=' + question.TYPES[type].apiValue;
+        if (type.apiValue) {
+            url += '&type=' + type.apiValue;
         }
         return url;
     }
@@ -130,10 +123,14 @@ function MultiChoiceHandler(initPlayer) {
         }
     }
 
-    function _sendQuestion(){
+    function _sendQuestion() {
         let question = player.getQuestion(questionNumber);
+        let category = player.getQuestionCategory(questionNumber);
         let possibleAnswers = player.getPossibleAnswers(questionNumber);
-        player.sendTextMessage(question + '\n' + 'Type the number:\n' + _formatPossibleAnswers(possibleAnswers), 1000);
+        player.sendTextMessage('Category: ' + category + '\n' +
+            question + '\n' +
+            'Type the number: \n' +
+            _formatPossibleAnswers(possibleAnswers));
     }
 
     function _formatPossibleAnswers(possibleAnswers) {
@@ -144,12 +141,16 @@ function MultiChoiceHandler(initPlayer) {
         return formattedAnswers;
     }
 
+    function _resetStatistics() {
+        questionNumber = 0;
+        correctAnswersNumber = 0;
+    }
+
     function _score() {
         return 'Your score: ' + correctAnswersNumber + '/' + questionNumber;
     }
 }
 
-const question = require('../constants/const.js').QUESTION;
 const https = require('https');
 const logger = require('../common/logger');
 const LookingForStartOptionState = require('../models/states/LookingForStartOptionState.js');
