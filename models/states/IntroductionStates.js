@@ -2,7 +2,6 @@ exports.WaitingFirstMessageState = WaitingFirstMessageState;
 exports.WaitingDifficultyState = WaitingDifficultyState;
 exports.WaitingQuestionsNumberPerRoundState = WaitingQuestionsNumberPerRoundState;
 exports.WaitingTypeState = WaitingTypeState;
-exports.SetupHandlerState = SetupHandlerState;
 
 function WaitingFirstMessageState() {
     this.name = 'WAITING_FIRST_MESSAGE';
@@ -52,22 +51,11 @@ function WaitingTypeState() {
         let valid = player.getHandler().processType(type);
         if (valid) {
             player.setType(type);
-            player.changeState(new SetupHandlerState());
+            player.changeState(new StartNewRoundState());
         }
     };
 }
 
-function SetupHandlerState() {
-    this.name = 'SETUP_HANDLER';
-    this.init = function (player) {
-        player.setHandler(new MultiChoiceHandler(player));
-        player.sendTextMessage("You've got 30 sec for each question.\nType '!' to finish game at any time.");
-        player.changeState(new StartNewRoundState());
-    };
-    this.transition = function () {};
-}
-
-let MultiChoiceHandler = require('../../handlers/MultiChoiceHandler.js');
 let IntroductionHandler = require('../../handlers/IntroductionHandler.js');
 const INTRODUCTION_MESSAGES = require('../../constants/const.js').INTRODUCTION;
 const StartNewRoundState = require('./StartNewRoundState');

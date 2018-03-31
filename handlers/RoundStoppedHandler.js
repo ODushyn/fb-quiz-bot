@@ -5,7 +5,7 @@ function RoundStoppedHandler(initPlayer) {
 
     this.processAnswer = function(player) {
         if(player.getMessage() === GAME_STOPPED.START_NEW_ROUND_OPT){
-            player.changeState(new SetupHandlerState());
+            player.changeState(new StartNewRoundState());
 
         }
         if(player.getMessage() === GAME_STOPPED.CHANGE_SETTING_OPT){
@@ -15,5 +15,5 @@ function RoundStoppedHandler(initPlayer) {
 };
 
 const GAME_STOPPED = require('../constants/const.js').GAME_STOPPED;
-const SetupHandlerState = require('../models/states/IntroductionStates').SetupHandlerState;
+const StartNewRoundState = require('../models/states/StartNewRoundState');
 const WaitingQuestionsNumberPerRoundState = require('../models/states/IntroductionStates').WaitingQuestionsNumberPerRoundState;
