@@ -1,7 +1,7 @@
 module.exports = MultiChoiceHandler;
 
 function MultiChoiceHandler(initPlayer) {
-    let ROUND_TIME = 3000;
+    let ROUND_TIME = 30000;
     let QUESTIONS = initPlayer.getQuestionsNumberPerRound();
     let questionNumber = 0;
     let correctAnswersNumber = 0;
@@ -16,9 +16,8 @@ function MultiChoiceHandler(initPlayer) {
     this.stopRound = function () {
         clearTimeout(roundTimeout);
         player.sendTextMessage(
-            'Game is finsihed. ' +
-            _score() + '\n' +
-            'Type anything to start new round.'
+            'Round is finished. ' +
+            _score() + '\n'
         );
         player.changeState(new RoundStoppedState());
     };
@@ -39,20 +38,20 @@ function MultiChoiceHandler(initPlayer) {
     }
 
     function _startNextRound() {
-        setTimeout(function () {
-            if (questionNumber + 1 <= QUESTIONS) {
+        if (questionNumber + 1 <= QUESTIONS) {
+            setTimeout(function () {
                 questionNumber++;
                 _sendQuestion();
                 _runRoundTimeout();
-            } else {
-                player.sendTextMessage(
-                    'Round is finished.' + '\n' +
-                    _score() + '\n' +
-                    'Type anything to start new round.'
-                );
-                player.changeState(new RoundStoppedState());
-            }
-        }, 2000)
+            }, 2000)
+        } else {
+            player.sendTextMessage(
+                'Round is finished.' + '\n' +
+                _score() + '\n' +
+                'Type anything to start new round.'
+            );
+            player.changeState(new RoundStoppedState());
+        }
     };
 
     function _setUpRoundQuiz() {

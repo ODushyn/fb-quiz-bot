@@ -2,6 +2,7 @@ exports.WaitingFirstMessageState = WaitingFirstMessageState;
 exports.WaitingDifficultyState = WaitingDifficultyState;
 exports.WaitingQuestionsNumberPerRoundState = WaitingQuestionsNumberPerRoundState;
 exports.WaitingTypeState = WaitingTypeState;
+exports.SetupHandlerState = SetupHandlerState;
 
 function WaitingFirstMessageState() {
     this.name = 'WAITING_FIRST_MESSAGE';
@@ -60,7 +61,7 @@ function SetupHandlerState() {
     this.name = 'SETUP_HANDLER';
     this.init = function (player) {
         player.setHandler(new MultiChoiceHandler(player));
-        player.sendTextMessage("You've got 30 sec for each question.\nType '!' to finish the game at any time.");
+        player.sendTextMessage("You've got 30 sec for each question.\nType '!' to finish game at any time.");
         player.changeState(new StartNewRoundState());
     };
     this.transition = function () {};
