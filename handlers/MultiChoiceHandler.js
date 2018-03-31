@@ -49,7 +49,7 @@ function MultiChoiceHandler(initPlayer) {
                 'Round is finished.' + '\n' +
                 _score() + '\n' +
                 'Type anything to start new round.',
-            1000);
+                1000);
             player.changeState(new RoundStoppedState());
         }
     };
@@ -126,7 +126,8 @@ function MultiChoiceHandler(initPlayer) {
         let question = player.getQuestion(questionNumber);
         let category = player.getQuestionCategory(questionNumber);
         let possibleAnswers = player.getPossibleAnswers(questionNumber);
-        player.sendTextMessage('Category: ' + category + '\n' +
+        player.sendTextMessage(questionNumber + '. ' +
+            'Category: ' + category + '\n' +
             question + '\n' +
             'Type the number: \n' +
             _formatPossibleAnswers(possibleAnswers));
