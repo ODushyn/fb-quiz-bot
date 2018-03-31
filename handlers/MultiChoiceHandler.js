@@ -23,9 +23,9 @@ function MultiChoiceHandler(initPlayer) {
     };
 
     this.processAnswer = function (player) {
-        if (player.gaveValidAnswer()) {
+        if (player.gaveValidAnswer(questionNumber)) {
             clearTimeout(roundTimeout);
-            player.gaveCorrectAnswer() ? _processCorrectAnswer() : _processIncorrectAnswer();
+            player.gaveCorrectAnswer(questionNumber) ? _processCorrectAnswer() : _processIncorrectAnswer();
             _startNextRound();
         }
     };
