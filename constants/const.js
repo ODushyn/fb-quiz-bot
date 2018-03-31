@@ -6,7 +6,7 @@ module.exports = {
     },
     QUESTION: {
         NUMBER_PER_ROUND: {
-            "1": 5,
+            "1": 2,
             "2": 10
         },
         CATEGORIES: {
@@ -79,5 +79,12 @@ module.exports = {
         + '2. Easy \n'
         + '3. Medium \n'
         + '4. Hard \n'
+    },
+    GAME_STOPPED: {
+        ASK_TYPE_OPTION: 'Type number to continue playing: \n'
+        + '1. Start new round \n'
+        + '2. Change settings \n',
+        START_NEW_ROUND_OPT: "1",
+        CHANGE_SETTING_OPT: "2"
     }
 };

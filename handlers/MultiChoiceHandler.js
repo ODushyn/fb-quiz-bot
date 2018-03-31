@@ -16,11 +16,11 @@ function MultiChoiceHandler(initPlayer) {
     this.stopRound = function () {
         clearTimeout(roundTimeout);
         player.sendTextMessage(
-            'Game is stopped.' +
+            'Game is finsihed. ' +
             _score() + '\n' +
             'Type anything to start new round.'
         );
-        player.changeState(new LookingForStartOptionState());
+        player.changeState(new RoundStoppedState());
     };
 
     this.processAnswer = function (player) {
@@ -50,7 +50,7 @@ function MultiChoiceHandler(initPlayer) {
                     _score() + '\n' +
                     'Type anything to start new round.'
                 );
-                player.changeState(new LookingForStartOptionState());
+                player.changeState(new RoundStoppedState());
             }
         }, 2000)
     };
@@ -155,3 +155,4 @@ const https = require('https');
 const logger = require('../common/logger');
 const LookingForStartOptionState = require('../models/states/LookingForStartOptionState.js');
 const StartNewRoundState = require('../models/states/StartNewRoundState.js');
+const RoundStoppedState = require('../models/states/RoundStoppedState.js');

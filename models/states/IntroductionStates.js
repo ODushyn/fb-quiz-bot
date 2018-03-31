@@ -13,6 +13,7 @@ function WaitingFirstMessageState() {
 function WaitingQuestionsNumberPerRoundState() {
     this.name = 'WAITING_QUESTIONS_NUMBER';
     this.init = function (player) {
+        player.setHandler(new IntroductionHandler(player));
         player.sendTextMessage(INTRODUCTION_MESSAGES.ASK_QUESTIONS_NUMBER_PER_ROUND);
     };
     this.transition = function (player) {
@@ -59,12 +60,13 @@ function SetupHandlerState() {
     this.name = 'SETUP_HANDLER';
     this.init = function (player) {
         player.setHandler(new MultiChoiceHandler(player));
-        player.sendTextMessage("You've got 30 sec for each question.\nType '!' to stop the game.");
+        player.sendTextMessage("You've got 30 sec for each question.\nType '!' to finish the game at any time.");
         player.changeState(new StartNewRoundState());
     };
     this.transition = function () {};
 }
 
 let MultiChoiceHandler = require('../../handlers/MultiChoiceHandler.js');
+let IntroductionHandler = require('../../handlers/IntroductionHandler.js');
 const INTRODUCTION_MESSAGES = require('../../constants/const.js').INTRODUCTION;
 const StartNewRoundState = require('./StartNewRoundState');
