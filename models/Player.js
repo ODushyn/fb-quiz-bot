@@ -59,6 +59,10 @@ function Player(id, stateContext) {
       return this.quiz[num].question;
     };
 
+    this.getCorrectOption = function(num = 0){
+        return this.quiz[num].correctOption;
+    };
+
     this.getPossibleAnswers = function(num = 0){
       return this.quiz[num].possibleAnswers;
     };

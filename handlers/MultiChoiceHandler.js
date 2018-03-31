@@ -34,7 +34,7 @@ function MultiChoiceHandler(initPlayer) {
 
     function _runRoundTimeout() {
         roundTimeout = setTimeout(function () {
-            player.sendTextMessage('Time is over.' + '\n' + 'Correct answer was: ' + '*' + player.answer + '*');
+            player.sendTextMessage('Time is over.' + '\n' + 'Correct answer was: ' + '*' + player.getCorrectOption(questionNumber) + '*');
             _startNextRound();
         }, ROUND_TIME);
     }

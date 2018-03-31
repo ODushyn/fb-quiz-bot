@@ -6,7 +6,6 @@ exports.WaitingTypeState = WaitingTypeState;
 function WaitingFirstMessageState() {
     this.name = 'WAITING_FIRST_MESSAGE';
     this.transition = function (player) {
-        player.sendTextMessage('We are playing round. Round contains 5 questions.');
         player.changeState(new WaitingQuestionsNumberPerRoundState())
     };
 }
