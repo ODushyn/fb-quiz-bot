@@ -48,8 +48,7 @@ function MultiChoiceHandler(initPlayer) {
         } else {
             player.addTextMessage(
                 'Round is finished.' + '\n' +
-                _score() + '\n' +
-                'Type anything to start new round.');
+                _score() + '\n');
             player.flushMessages();
             player.changeState(new RoundStoppedState());
         }
