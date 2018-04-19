@@ -13,6 +13,7 @@ function Player(id, stateContext) {
     this.quiz = [];
     this.handler = new IntroductionHandler(this);
     this.stateContext = stateContext;
+    this.messageBuffer = []; 
 
     this.getId = function () {
         return this.id;
@@ -48,9 +49,14 @@ function Player(id, stateContext) {
         return this.quiz[num - 1].possibleOptions.includes(this.message);
     };
 
-    this.sendTextMessage = function (text) {
-        fbAPI.sendTextMessage(this.id, he.decode(text));
+    this.addTextMessage = function (text) {
+      this.messageBuffer.push(text);
+      return this;
     };
+  
+    this.flushMessages = function() {
+      fbAPI.sendTextMessage(this.id, he.decode(this.messageBuffer.join('\n')));
+    }
 
     this.getMessage = function () {
         return this.message;

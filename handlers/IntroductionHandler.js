@@ -13,10 +13,10 @@ function IntroductionHandler(initPlayer) {
         return Object.getOwnPropertyNames(QUESTION.TYPES).includes(typeNum);
     },
     this.stopRound = function () {
-        player.sendTextMessage('Game has not started yet.');
+        player.addTextMessage('Game has not started yet.').flushMessages();
     },
     this.restartRound = function () {
-        player.sendTextMessage('Game has not started yet.');
+        player.addTextMessage('Game has not started yet.').flushMessages();
     }
 };
 

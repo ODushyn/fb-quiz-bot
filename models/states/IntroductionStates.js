@@ -13,8 +13,9 @@ function WaitingQuestionsNumberPerRoundState() {
     this.name = 'WAITING_QUESTIONS_NUMBER';
     this.init = function (player) {
         player.setHandler(new IntroductionHandler(player));
-        player.sendTextMessage(INTRODUCTION_MESSAGES.GREETING);
-        player.sendTextMessage(INTRODUCTION_MESSAGES.ASK_QUESTIONS_NUMBER_PER_ROUND);
+        player.addTextMessage(INTRODUCTION_MESSAGES.GREETING)
+              .addTextMessage(INTRODUCTION_MESSAGES.ASK_QUESTIONS_NUMBER_PER_ROUND);
+        player.flushMessages();
     };
     this.transition = function (player) {
         let questionsNumber = player.getMessage();
@@ -23,7 +24,7 @@ function WaitingQuestionsNumberPerRoundState() {
             player.setQuestionsNumberPerRound(questionsNumber);
             player.changeState(new WaitingTypeState())
         } else {
-            player.sendTextMessage('Type 1 or 2');
+            player.addTextMessage('Type 1 or 2').flushMessages();
         }
     };
 }
@@ -31,7 +32,7 @@ function WaitingQuestionsNumberPerRoundState() {
 function WaitingTypeState() {
     this.name = 'WAITING_TYPES';
     this.init = function (player) {
-        player.sendTextMessage(INTRODUCTION_MESSAGES.ASK_TYPES);
+        player.addTextMessage(INTRODUCTION_MESSAGES.ASK_TYPES).flushMessages();
     };
     this.transition = function (player) {
         let type = player.getMessage();
@@ -40,7 +41,7 @@ function WaitingTypeState() {
             player.setType(type);
             player.changeState(new StartNewRoundState());
         } else {
-            player.sendTextMessage('Type 1, 2 or 3');
+            player.addTextMessage('Type 1, 2 or 3').flushMessages();
         }
     };
 }

@@ -15,7 +15,7 @@ function MultiChoiceHandler(initPlayer) {
 
     this.stopRound = function () {
         clearTimeout(roundTimeout);
-        player.sendTextMessage(
+        player.addTextMessage(
             'Round is finished. ' +
             _score() + '\n'
         );
@@ -32,7 +32,8 @@ function MultiChoiceHandler(initPlayer) {
 
     function _runRoundTimeout() {
         roundTimeout = setTimeout(function () {
-            player.sendTextMessage('Time is over.' + '\n' + 'Correct answer was: ' + '*' + player.getCorrectOption(questionNumber) + '*');
+            player.addTextMessage('Time is over.' + '\n' + 'Correct answer was: ' + '*' + player.getCorrectOption(questionNumber) + '*');
+            player.flushMessages();
             _startNextRound();
         }, ROUND_TIME);
     }
@@ -43,13 +44,13 @@ function MultiChoiceHandler(initPlayer) {
                 questionNumber++;
                 _sendQuestion();
                 _runRoundTimeout();
-            }, 2000)
+            }, 2000);
         } else {
-            player.sendTextMessage(
+            player.addTextMessage(
                 'Round is finished.' + '\n' +
                 _score() + '\n' +
-                'Type anything to start new round.',
-                1000);
+                'Type anything to start new round.');
+            player.flushMessages();
             player.changeState(new RoundStoppedState());
         }
     };
@@ -73,12 +74,13 @@ function MultiChoiceHandler(initPlayer) {
     }
 
     function _processIncorrectAnswer() {
-        player.sendTextMessage("Unfortunately, correct answer was: " + '*' + player.getCorrectOption(questionNumber) + '*');
+        player.addTextMessage("Unfortunately, correct answer was: " + '*' + player.getCorrectOption(questionNumber) + '*');
+        player.flushMessages();
     }
 
     function _processCorrectAnswer() {
         correctAnswersNumber++;
-        player.sendTextMessage('Correct!');
+        player.addTextMessage('Correct!').flushMessages();
     }
 
     function _buildURL() {
@@ -126,11 +128,12 @@ function MultiChoiceHandler(initPlayer) {
         let question = player.getQuestion(questionNumber);
         let category = player.getQuestionCategory(questionNumber);
         let possibleAnswers = player.getPossibleAnswers(questionNumber);
-        player.sendTextMessage(questionNumber + '. ' +
+        player.addTextMessage(questionNumber + '. ' +
             'Category: ' + category + '\n' +
             question + '\n' +
             'Type the number: \n' +
             _formatPossibleAnswers(possibleAnswers));
+        player.flushMessages();
     }
 
     function _formatPossibleAnswers(possibleAnswers) {

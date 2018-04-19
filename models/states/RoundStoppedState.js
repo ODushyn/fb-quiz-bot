@@ -3,7 +3,7 @@ module.exports = RoundStoppedState;
 function RoundStoppedState() {
     this.name = 'ROUND_STOPPED';
     this.init = function (player) {
-        player.sendTextMessage(GAME_STOPPED.ASK_TYPE_OPTION, 2000);
+        player.addTextMessage(GAME_STOPPED.ASK_TYPE_OPTION).flushMessages();
         player.setHandler(new RoundStoppedHandler(player));
         player.changeState(new WaitingForQuizAnswerState());
     };
