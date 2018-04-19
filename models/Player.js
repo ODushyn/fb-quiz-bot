@@ -5,6 +5,7 @@ function Player(id, stateContext) {
     this.message = null;
     this.settings = {
         category: "1", // always random category
+        difficulty: "2", // always easy
         MULTIPLE_CHOICE: {
             introduced: false
         }
@@ -23,7 +24,7 @@ function Player(id, stateContext) {
     };
 
     this.changeState = function (newState) {
-        this.stateContext.changeState(newState, this)
+        this.stateContext.changeState(newState, this);
     };
 
     this.setHandler = function (handler) {

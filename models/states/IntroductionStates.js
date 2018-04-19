@@ -1,5 +1,4 @@
 exports.WaitingFirstMessageState = WaitingFirstMessageState;
-exports.WaitingDifficultyState = WaitingDifficultyState;
 exports.WaitingQuestionsNumberPerRoundState = WaitingQuestionsNumberPerRoundState;
 exports.WaitingTypeState = WaitingTypeState;
 
@@ -14,6 +13,7 @@ function WaitingQuestionsNumberPerRoundState() {
     this.name = 'WAITING_QUESTIONS_NUMBER';
     this.init = function (player) {
         player.setHandler(new IntroductionHandler(player));
+        player.sendTextMessage(INTRODUCTION_MESSAGES.GREETING);
         player.sendTextMessage(INTRODUCTION_MESSAGES.ASK_QUESTIONS_NUMBER_PER_ROUND);
     };
     this.transition = function (player) {
@@ -21,22 +21,9 @@ function WaitingQuestionsNumberPerRoundState() {
         let valid = player.getHandler().processQuestionsNumber(questionsNumber);
         if (valid) {
             player.setQuestionsNumberPerRound(questionsNumber);
-            player.changeState(new WaitingDifficultyState())
-        }
-    };
-}
-
-function WaitingDifficultyState() {
-    this.name = 'WAITING_DIFFICULTY';
-    this.init = function(player) {
-        player.sendTextMessage(INTRODUCTION_MESSAGES.ASK_DIFFICULTY);
-    };
-    this.transition = function (player) {
-        let difficulty = player.getMessage();
-        let valid = player.getHandler().processDifficulty(difficulty);
-        if (valid) {
-            player.setDifficulty(difficulty);
-            player.changeState(new WaitingTypeState());
+            player.changeState(new WaitingTypeState())
+        } else {
+            player.sendTextMessage('Type 1 or 2');
         }
     };
 }
@@ -52,6 +39,8 @@ function WaitingTypeState() {
         if (valid) {
             player.setType(type);
             player.changeState(new StartNewRoundState());
+        } else {
+            player.sendTextMessage('Type 1, 2 or 3');
         }
     };
 }
