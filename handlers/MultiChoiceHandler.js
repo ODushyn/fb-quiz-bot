@@ -102,14 +102,25 @@ function MultiChoiceHandler(initPlayer) {
     }
 
     function _createRoundQuiz(results) {
-        return results.map(result =>
-            Object.assign(
+        return results.map(result => {
+          let resultExtension = {};
+          if(result.type==='boolean') {
+            let possibleBooleanAnswers = ['True', 'False'];
+            resultExtension = {
+                  possibleAnswers: possibleBooleanAnswers,
+                  possibleOptions: ['1', '2'],
+                  correctOption: (possibleBooleanAnswers.findIndex((ans) => ans === result.correct_answer) + 1).toString()
+            }
+          } else {
+            resultExtension = extension(result.correct_answer, result.incorrect_answers, result.type);
+          } 
+          return Object.assign(
                 result,
-                extension(result.correct_answer, result.incorrect_answers)
+                resultExtension
             )
-        );
+        });
 
-        function extension(corAnswer, incAnswers) {
+        function extension(corAnswer, incAnswers, type) {
             let correctOption = Math.floor(Math.random() * (incAnswers.length + 1));
             let possibleAnswers = [
                 ...incAnswers.slice(0, correctOption),
