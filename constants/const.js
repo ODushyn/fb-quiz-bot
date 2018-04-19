@@ -45,7 +45,7 @@ module.exports = {
         }
     },
     INTRODUCTION: {
-        GREETING: 'Hello! My name is quizee. Hope you will enjoy playing with me!',
+        GREETING: 'Hello! My name is Quizee. Hope you will enjoy playing with me!',
         ASK_QUESTIONS_NUMBER_PER_ROUND: ' Choose number of questions per round: \n'
         + '1. 5 questions. \n'
         + '2. 10 questions \n',

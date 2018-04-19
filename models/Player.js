@@ -56,6 +56,7 @@ function Player(id, stateContext) {
   
     this.flushMessages = function() {
       fbAPI.sendTextMessage(this.id, he.decode(this.messageBuffer.join('\n')));
+      this.messageBuffer = [];
     }
 
     this.getMessage = function () {
