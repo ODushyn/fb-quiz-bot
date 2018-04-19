@@ -5,7 +5,6 @@ function StartNewRoundState() {
     this.init = function (player) {
         player.setHandler(new MultiChoiceHandler(player));
         player.addTextMessage("You've got 30 sec for each question.\nType '!' to finish game at any time.");
-        player.flushMessages();
         player.getHandler().startRound();
         player.changeState(new WaitingForQuizAnswerState());
     };
